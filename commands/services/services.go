@@ -66,7 +66,10 @@ var ServiceCommand = &cli.Command{
 				log.Fatal(err)
 			}
 
-			utils.CopyDir(templatePath, "output/")
+			err = utils.CopyDir(templatePath, "./")
+			if err != nil {
+				log.Fatal(err)
+			}
 		} else {
 			fmt.Println("Something else")
 		}
