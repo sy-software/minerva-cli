@@ -80,7 +80,7 @@ func CopyFile(src, dst string) (err error) {
 // CopyDir recursively copies a directory tree, attempting to preserve permissions.
 // Source directory must exist, destination directory can exists or not.
 // Symlinks are ignored and skipped.
-func CopyDir(src string, dst string) (err error) {
+func CopyDir(src string, dst string, omit []string) (err error) {
 	src = filepath.Clean(src)
 	dst = filepath.Clean(dst)
 	si, err := os.Stat(src)
@@ -107,11 +107,15 @@ func CopyDir(src string, dst string) (err error) {
 	}
 
 	for _, entry := range entries {
+		if Contains(omit, entry.Name()) != -1 {
+			continue
+		}
+
 		srcPath := filepath.Join(src, entry.Name())
 		dstPath := filepath.Join(dst, entry.Name())
 
 		if entry.IsDir() {
-			err = CopyDir(srcPath, dstPath)
+			err = CopyDir(srcPath, dstPath, omit)
 			if err != nil {
 				return
 			}

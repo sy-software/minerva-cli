@@ -66,7 +66,7 @@ var ServiceCommand = &cli.Command{
 				log.Fatal(err)
 			}
 
-			err = utils.CopyDir(templatePath, "./")
+			err = utils.CopyDir(templatePath, "./", []string{".git"})
 			if err != nil {
 				log.Fatal(err)
 			}
