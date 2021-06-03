@@ -33,12 +33,19 @@ import (
 	"path/filepath"
 )
 
+type FileUtilsInterface interface {
+	CopyFile(src, dst string) error
+	CopyDir(src string, dst string, omit []string) error
+}
+
+type FileUtils struct{}
+
 // CopyFile copies the contents of the file named src to the file named
 // by dst. The file will be created if it does not already exist. If the
 // destination file exists, all it's contents will be replaced by the contents
 // of the source file. The file mode will be copied from the source and
 // the copied data is synced/flushed to stable storage.
-func CopyFile(src, dst string) (err error) {
+func (instance FileUtils) CopyFile(src, dst string) (err error) {
 	in, err := os.Open(src)
 	if err != nil {
 		return
@@ -80,7 +87,7 @@ func CopyFile(src, dst string) (err error) {
 // CopyDir recursively copies a directory tree, attempting to preserve permissions.
 // Source directory must exist, destination directory can exists or not.
 // Symlinks are ignored and skipped.
-func CopyDir(src string, dst string, omit []string) (err error) {
+func (instance FileUtils) CopyDir(src string, dst string, omit []string) (err error) {
 	src = filepath.Clean(src)
 	dst = filepath.Clean(dst)
 	si, err := os.Stat(src)
@@ -107,7 +114,7 @@ func CopyDir(src string, dst string, omit []string) (err error) {
 	}
 
 	for _, entry := range entries {
-		if Contains(omit, entry.Name()) != -1 {
+		if Contains(omit, entry.Name()) {
 			continue
 		}
 
@@ -115,7 +122,7 @@ func CopyDir(src string, dst string, omit []string) (err error) {
 		dstPath := filepath.Join(dst, entry.Name())
 
 		if entry.IsDir() {
-			err = CopyDir(srcPath, dstPath, omit)
+			err = instance.CopyDir(srcPath, dstPath, omit)
 			if err != nil {
 				return
 			}
@@ -125,7 +132,7 @@ func CopyDir(src string, dst string, omit []string) (err error) {
 				continue
 			}
 
-			err = CopyFile(srcPath, dstPath)
+			err = instance.CopyFile(srcPath, dstPath)
 			if err != nil {
 				return
 			}

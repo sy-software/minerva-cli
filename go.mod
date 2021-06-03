@@ -1,4 +1,4 @@
-module sysoft.com/minerva-cli
+module github.com/sy-software/minerva-cli
 
 go 1.16
 
