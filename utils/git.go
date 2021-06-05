@@ -2,9 +2,10 @@ package utils
 
 import (
 	"errors"
-	"fmt"
 	"os"
 	"os/exec"
+	"path/filepath"
+	"strconv"
 	"time"
 )
 
@@ -14,7 +15,7 @@ var ErrGitNotFound = errors.New("git command not found")
 // cloneTemplate clones the service template repository
 // returns an error if git not installed in the machine
 func CloneTemplate(template string) (string, error) {
-	tempDir := fmt.Sprint(os.TempDir(), "service-template-", time.Now().UnixNano())
+	tempDir := filepath.Join(os.TempDir(), "service-template-", strconv.FormatInt(time.Now().UnixNano(), 10))
 	gitPath, err := exec.LookPath("git")
 
 	if err != nil {
