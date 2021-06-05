@@ -7,16 +7,20 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
+// ProjectManagerCommand exposes a ProjectManager instance as a CLI command
 type ProjectManagerCommand struct {
+	// service is a value implementing the ports.ProjectManager interface
 	service ports.ProjectManager
 }
 
+// NewProjectManagerCommand initialize a ProjectManagerCommand with the given service instance
 func NewProjectManagerCommand(service ports.ProjectManager) *ProjectManagerCommand {
 	return &ProjectManagerCommand{
 		service: service,
 	}
 }
 
+// Action execute the service based on the CLI options
 func (handler ProjectManagerCommand) Action(c *cli.Context) error {
 	if c.Bool("init") {
 		handler.service.InitRepo("NotImplemented")
@@ -27,6 +31,7 @@ func (handler ProjectManagerCommand) Action(c *cli.Context) error {
 	return nil
 }
 
+// GetCommand wraps the adapter in a cli.Command struct
 func (handler ProjectManagerCommand) GetCommand() *cli.Command {
 	return &cli.Command{
 		Name:     "project",

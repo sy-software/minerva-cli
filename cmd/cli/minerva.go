@@ -9,6 +9,7 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
+// Exposes minerva as a CLI
 func main() {
 	service := service.NewProjectManagerService()
 	handler := handlers.NewProjectManagerCommand(service)

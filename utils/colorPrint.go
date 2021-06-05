@@ -6,13 +6,15 @@ package utils
 import "fmt"
 
 var (
+	Debug = Purple
 	Info  = Teal
 	Warn  = Yellow
-	Fatal = Red
+	Error = Red
 )
 
 var (
 	Black   = Color("\033[1;30m%s\033[0m\n")
+	Gray    = Color("\033[0;37m%s\033[0m\n")
 	Red     = Color("\033[1;31m%s\033[0m\n")
 	Green   = Color("\033[1;32m%s\033[0m\n")
 	Yellow  = Color("\033[1;33m%s\033[0m\n")

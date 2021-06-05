@@ -33,6 +33,7 @@ import (
 	"path/filepath"
 )
 
+// FileUtilsInterface exposes utilities for file manipulation
 type FileUtilsInterface interface {
 	CopyFile(src, dst string) error
 	CopyDir(src string, dst string, omit []string) error
