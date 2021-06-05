@@ -3,7 +3,7 @@ package service
 import "github.com/sy-software/minerva-cli/utils"
 
 // Base template address for a service repository
-const SERVICE_TEMPLATE = "git@github.com:sy-software/minerva-service-template.git"
+const SERVICE_TEMPLATE = "https://github.com/sy-software/minerva-go-template.git"
 
 type ProjectManagerService struct {
 	fileUtils utils.FileUtilsInterface
