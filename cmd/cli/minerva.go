@@ -11,16 +11,21 @@ import (
 
 // Exposes minerva as a CLI
 func main() {
-	service := service.NewProjectManagerService()
-	handler := handlers.NewProjectManagerCommand(service)
-	projectsCommand := handler.GetCommand()
+	projService := service.NewProjectManagerService()
+	projHandler := handlers.NewProjectManagerCommand(projService)
+	projCommand := projHandler.GetCommand()
+
+	testService := &service.TestRunnerService{}
+	testHandler := handlers.NewTestRunnerCommand(testService)
+	testCommand := testHandler.GetCommand()
 
 	app := &cli.App{
 		Name:     "Minerva CLI",
 		Usage:    "A tool to manage minerva components and development workflow",
 		HelpName: "minerva",
 		Commands: []*cli.Command{
-			projectsCommand,
+			projCommand,
+			testCommand,
 		},
 	}
 
