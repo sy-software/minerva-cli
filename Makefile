@@ -11,7 +11,6 @@ BINARY_PATH=bin/
 BINARY_LINUX=$(BINARY_NAME)_linux
 ENTRY_POINT=cmd/cli/minerva.go
 
-
 all: clean test build
 build:
 		$(GOBUILD) -o $(BINARY_PATH)$(BINARY_NAME) -v $(ENTRY_POINT)
