@@ -18,6 +18,7 @@ type TestRunnerService struct {
 
 func (runner *TestRunnerService) RunTests(path string, watch bool, args []string) error {
 	if watch {
+		executeTests(path, args)
 		return watchMode(path, args)
 	} else {
 		return executeTests(path, args)
